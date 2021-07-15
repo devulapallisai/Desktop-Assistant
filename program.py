@@ -6,6 +6,7 @@ from googlesearch import search
 import pyjokes              
 import wikipedia
 import webbrowser
+import pywhatkit
 engine=pyttsx3.init('sapi5') 
 voices=engine.getProperty('voices')
 engine.setProperty('voice',voices[0].id)
@@ -39,7 +40,7 @@ def detectourAudio():
         return "None"
     return query
 def detectourAudiostart():
-    print('Hello')
+    # print('Hello')
     r = sr.Recognizer()
     with sr.Microphone() as source:
         r.pause_threshold = 1
@@ -88,7 +89,7 @@ def command(text):
         os.startfile(r'C:\Users\user\AppData\Local\Programs\Microsoft VS Code\Code.exe')
     elif(query.find('joke')!=-1):
         speak(pyjokes.get_joke())
-    elif 'exit' in query:
+    elif(query.find('exit')!=-1 or query.find('stop')!=-1) :
         speak(r"Thanks for giving me your time I am pleased to hear your queries again and to answer them")
         exit()
     elif(query.find('your name')!=-1 or query.find('you')!=-1):
@@ -106,8 +107,8 @@ def command(text):
     elif(query.find('search')!=-1):
         speak('what do you want to search now')
         searchit=detectourAudio()
-        listed=search(searchit,tld="com",num=1)
-        webbrowser.open(str(listed))
+        # webbrowser.open(str(listed[0]))
+        pywhatkit.search(searchit)
 
 
 if __name__=="__main__":
